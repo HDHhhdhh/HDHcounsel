@@ -1,0 +1,47 @@
+[
+  {
+    "from": "에이 블",
+    "to": "A:ble",
+    "note": "academy brand spacing variant"
+  },
+  {
+    "from": "에이블",
+    "to": "A:ble",
+    "note": "academy brand Korean reading"
+  },
+  {
+    "from": "에이팩스",
+    "to": "APEX",
+    "note": "program or course name"
+  },
+  {
+    "from": "아펙스",
+    "to": "APEX",
+    "note": "program or course name variant"
+  },
+  {
+    "from": "파이널 모의고사",
+    "to": "파이널",
+    "note": "short internal course label"
+  },
+  {
+    "from": "변형 프린터",
+    "to": "변형 프린트",
+    "note": "common ASR confusion"
+  },
+  {
+    "from": "공통 수학",
+    "to": "공통수학",
+    "note": "curriculum spacing"
+  },
+  {
+    "from": "공수",
+    "to": "공통수학",
+    "note": "curriculum abbreviation candidate"
+  },
+  {
+    "from": "대수학",
+    "to": "대수",
+    "note": "curriculum label"
+  }
+]

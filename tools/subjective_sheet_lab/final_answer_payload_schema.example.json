@@ -1,0 +1,156 @@
+{
+  "schema": "subjective_final_answer_payload",
+  "schema_version": "0.1",
+  "external_api_calls": false,
+  "test_id": "subjective_sample_test",
+  "case_id": "person_05_guided_good",
+  "student_id": "sample_student",
+  "attempt_id": "attempt_001",
+  "source": {
+    "ocr_result": "vision_result/ocr_result_manual_vision_20.json",
+    "eval_json": "eval/eval.json",
+    "review_export": "review_ui_export_person_05_guided_good.json"
+  },
+  "summary": {
+    "total": 4,
+    "gradable_count": 3,
+    "blocked_count": 1,
+    "safe_auto_grade_count": 1,
+    "student_selected_count": 1,
+    "student_manual_input_count": 1,
+    "retake_required_count": 1,
+    "blocked_unconfirmed_count": 0
+  },
+  "items": [
+    {
+      "question": 1,
+      "recognized": "1/2",
+      "candidates": [],
+      "final_answer": "1/2",
+      "final_answer_source": "safe_auto_grade",
+      "grading_status": "gradable",
+      "confirmation_status": "not_required",
+      "student_action": "none",
+      "is_correct": null,
+      "score": null,
+      "warnings": [],
+      "review_reasons": [],
+      "evidence": {
+        "original_crop": "crops/q001.png",
+        "enhanced_crop": "enhanced_crops/q001.png",
+        "retake_crop": null
+      },
+      "timestamps": {
+        "recognized_at": "2026-06-14T10:00:00+09:00",
+        "student_finalized_at": null,
+        "retaken_at": null,
+        "finalized_at": "2026-06-14T10:01:00+09:00"
+      },
+      "retake_count": 0
+    },
+    {
+      "question": 4,
+      "recognized": "7,C",
+      "candidates": ["ㄱ,ㄷ", "ㄷ,ㄱ", "7,C"],
+      "final_answer": "ㄱ,ㄷ",
+      "final_answer_source": "student_selected",
+      "grading_status": "gradable",
+      "confirmation_status": "student_finalized",
+      "student_action": "select_candidate",
+      "is_correct": null,
+      "score": null,
+      "warnings": ["jamo_choice_confusion"],
+      "review_reasons": ["recognized contains confusable characters for ㄱ/ㄴ/ㄷ/ㄹ choice answer"],
+      "evidence": {
+        "original_crop": "crops/q004.png",
+        "enhanced_crop": "enhanced_crops/q004.png",
+        "retake_crop": null
+      },
+      "timestamps": {
+        "recognized_at": "2026-06-14T10:00:00+09:00",
+        "student_finalized_at": "2026-06-14T10:02:00+09:00",
+        "retaken_at": null,
+        "finalized_at": "2026-06-14T10:02:00+09:00"
+      },
+      "retake_count": 0
+    },
+    {
+      "question": 9,
+      "recognized": "x±2=4",
+      "candidates": ["x+2=4", "x-2=4", "x±2=4"],
+      "final_answer": "x+2=4",
+      "final_answer_source": "student_manual_input",
+      "grading_status": "gradable",
+      "confirmation_status": "student_finalized",
+      "student_action": "manual_input",
+      "is_correct": null,
+      "score": null,
+      "warnings": ["plus_minus_uncertain"],
+      "review_reasons": ["plus/minus sign is uncertain"],
+      "evidence": {
+        "original_crop": "crops/q009.png",
+        "enhanced_crop": "enhanced_crops/q009.png",
+        "retake_crop": null
+      },
+      "timestamps": {
+        "recognized_at": "2026-06-14T10:00:00+09:00",
+        "student_finalized_at": "2026-06-14T10:03:00+09:00",
+        "retaken_at": null,
+        "finalized_at": "2026-06-14T10:03:00+09:00"
+      },
+      "retake_count": 0
+    },
+    {
+      "question": 12,
+      "recognized": "",
+      "candidates": [],
+      "final_answer": null,
+      "final_answer_source": null,
+      "grading_status": "blocked",
+      "confirmation_status": "retake_required",
+      "student_action": "retake",
+      "is_correct": null,
+      "score": null,
+      "warnings": ["blank_or_missing", "possible_crop_cutoff"],
+      "review_reasons": ["answer is blank or missing", "answer may be cut off in crop"],
+      "evidence": {
+        "original_crop": "crops/q012.png",
+        "enhanced_crop": "enhanced_crops/q012.png",
+        "retake_crop": null
+      },
+      "timestamps": {
+        "recognized_at": "2026-06-14T10:00:00+09:00",
+        "student_finalized_at": null,
+        "retaken_at": null,
+        "finalized_at": null
+      },
+      "retake_count": 0
+    }
+  ],
+  "policy": {
+    "free_input_scope": "review_required_only",
+    "safe_auto_grade_uses_recognized": true,
+    "retake_required_allows_input": false,
+    "editable_after_final_submit": false,
+    "gradable_status_only": "gradable",
+    "allowed_values": {
+      "grading_status": ["gradable", "blocked"],
+      "confirmation_status": [
+        "not_required",
+        "pending_student_input",
+        "student_finalized",
+        "retake_required",
+        "retaken",
+        "blocked_unconfirmed"
+      ],
+      "final_answer_source": [
+        "safe_auto_grade",
+        "student_selected",
+        "student_manual_input",
+        "retake_recognized",
+        null
+      ],
+      "student_action": ["none", "select_candidate", "manual_input", "retake", null]
+    }
+  }
+}

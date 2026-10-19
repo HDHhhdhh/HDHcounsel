@@ -1,0 +1,72 @@
+{
+  "template_version": "subjective_sheet_v3",
+  "sheet_title": "Subjective Answer Sheet v3",
+  "test_id": "subjective_unit_test_sample_v3",
+  "test_name": "주관식 단원평가 샘플 v3",
+  "question_count": 20,
+  "answer_text_format": "line_based",
+  "page": {
+    "width_px": 2480,
+    "height_px": 3508,
+    "dpi": 300
+  },
+  "marker": {
+    "size_px": 128,
+    "inset_px": 110,
+    "quiet_zone_px": 70
+  },
+  "layout": {
+    "top_content_start_px": 690,
+    "bottom_margin_px": 350,
+    "column_gap_px": 130,
+    "side_margin_px": 320,
+    "row_gap_px": 18,
+    "answer_box_inner_inset_px": 34
+  },
+  "box_style": {
+    "columns": 2,
+    "rows_per_column": 10,
+    "box_height_px": 230,
+    "crop_policy": "full_answer_box_with_safe_margin",
+    "include_answer_box_border": true,
+    "exclude_question_number_box": true,
+    "question_number_box_width_px": 116,
+    "crop_safe_margin_left_px": 12,
+    "crop_safe_margin_right_px": 12,
+    "crop_safe_margin_top_px": 12,
+    "crop_safe_margin_bottom_px": 28,
+    "crop_divider_clearance_px": 14,
+    "write_safe_zone": true,
+    "safe_zone_inset_x_px": 34,
+    "safe_zone_inset_top_px": 32,
+    "safe_zone_inset_bottom_px": 58,
+    "safe_zone_line_color": [
+      205,
+      205,
+      205
+    ],
+    "safe_zone_line_style": "dashed",
+    "safe_zone_line_width": 1,
+    "answer_box_border_color": [
+      150,
+      150,
+      150
+    ],
+    "answer_box_border_width": 2,
+    "question_divider_color": [
+      150,
+      150,
+      150
+    ],
+    "question_divider_width": 2,
+    "question_number_color": [
+      25,
+      25,
+      25
+    ]
+  },
+  "instruction_lines": [
+    "중앙에 크게 작성 · 아래 선/칸 밖 금지",
+    "0/6·0/O·1/7·x/n·ㄱㄴㄷㄹ·<와<= 구분"
+  ]
+}

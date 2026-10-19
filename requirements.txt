@@ -1,0 +1,5 @@
+streamlit
+faster-whisper
+pyperclip
+send2trash
+requests

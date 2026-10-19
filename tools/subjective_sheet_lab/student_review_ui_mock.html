@@ -1,0 +1,1087 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Review UI Mock</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f8fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #66748a;
+      --line: #d9e2ef;
+      --brand: #2458d3;
+      --brand-dark: #173d94;
+      --warn: #a33b10;
+      --soft-warn: #fff2ea;
+      --ok: #12633d;
+      --soft-ok: #eaf8f0;
+      --blocked: #8b1e2d;
+      --soft-blocked: #fff0f2;
+      --shadow: 0 10px 28px rgba(28, 42, 68, 0.09);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    button, .file-label {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 9px 12px;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button.primary {
+      border-color: var(--brand);
+      background: var(--brand);
+      color: #fff;
+    }
+
+    button.retake {
+      border-color: #d99a84;
+      background: var(--soft-warn);
+      color: var(--warn);
+    }
+
+    button.primary:hover { background: var(--brand-dark); }
+    button:hover, .file-label:hover { border-color: #9db0cc; }
+    button:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+    input[type="file"] { display: none; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat .label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .stat .value {
+      font-size: 27px;
+      font-weight: 700;
+    }
+
+    .status-line {
+      min-height: 24px;
+      color: var(--muted);
+      font-size: 14px;
+      margin: 8px 0 14px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .safe-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .safe-chip {
+      border: 1px solid #badfcb;
+      background: var(--soft-ok);
+      color: var(--ok);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .cards {
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcff;
+    }
+
+    .q-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .badge.review {
+      background: var(--soft-warn);
+      color: var(--warn);
+    }
+
+    .badge.blocked {
+      background: var(--soft-blocked);
+      color: var(--blocked);
+    }
+
+    .card-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(310px, 0.88fr);
+      gap: 18px;
+      padding: 16px;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    figcaption {
+      padding: 8px 10px;
+      background: #f0f4fa;
+      color: var(--muted);
+      font-size: 13px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .crop-frame {
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .crop-frame img {
+      max-width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      border: 1px solid #edf1f6;
+    }
+
+    .missing-image {
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      padding: 28px 10px;
+    }
+
+    .details {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .field {
+      display: grid;
+      gap: 5px;
+    }
+
+    .field label, .field .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .mono {
+      font-family: Consolas, "Courier New", monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pill {
+      border: 1px solid #efc4ad;
+      border-radius: 999px;
+      background: var(--soft-warn);
+      color: var(--warn);
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .retake-status {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfcff;
+      padding: 10px;
+    }
+
+    .retake-status.blocked {
+      border-color: #efc4c9;
+      background: var(--soft-blocked);
+      color: var(--blocked);
+      font-weight: 700;
+    }
+
+    .choices {
+      display: grid;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfcff;
+    }
+
+    .choice-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 30px;
+    }
+
+    .choice-row input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+    }
+
+    .manual-input {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font: inherit;
+    }
+
+    .action-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .decision {
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .decision.done {
+      color: var(--ok);
+      background: var(--soft-ok);
+    }
+
+    .decision.pending {
+      color: var(--warn);
+      background: var(--soft-warn);
+    }
+
+    .export-panel {
+      margin-top: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .export-panel textarea {
+      width: 100%;
+      min-height: 230px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 920px) {
+      header, .card-body {
+        grid-template-columns: 1fr;
+        display: grid;
+      }
+
+      .toolbar {
+        justify-content: flex-start;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 620px) {
+      main {
+        width: min(100% - 20px, 1180px);
+        padding-top: 18px;
+      }
+
+      h1 { font-size: 23px; }
+      .image-grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr; }
+      .card-header { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Student Review Mock</h1>
+        <p class="subtitle">학생 확인 전용 mock입니다. 서버/API 없이 후보 선택, 직접 입력, 재촬영 분기만 검증합니다.</p>
+      </div>
+      <div class="toolbar" aria-label="도구">
+        <button type="button" id="loadSampleBtn">샘플 다시 로드</button>
+        <label class="file-label" for="jsonFile">JSON 파일 선택</label>
+        <input id="jsonFile" type="file" accept="application/json,.json">
+        <button type="button" class="primary" id="exportBtn">payload export</button>
+        <button type="button" id="downloadBtn">JSON 다운로드</button>
+      </div>
+    </header>
+
+    <section class="stats" aria-label="요약">
+      <div class="stat"><span class="label">total</span><span class="value" id="totalCount">0</span></div>
+      <div class="stat"><span class="label">safe_auto_grade</span><span class="value" id="safeCount">0</span></div>
+      <div class="stat"><span class="label">review_required</span><span class="value" id="reviewCount">0</span></div>
+      <div class="stat"><span class="label">retake_required</span><span class="value" id="retakeCount">0</span></div>
+    </section>
+
+    <div class="status-line" id="statusLine"></div>
+
+    <section class="panel" aria-label="자동 인식 완료 문항">
+      <h2>자동 인식 완료</h2>
+      <p class="subtitle">safe_auto_grade 문항은 학생 입력 없이 자동 확정됩니다.</p>
+      <div class="safe-list" id="safeList"></div>
+    </section>
+
+    <section class="cards" id="cards"></section>
+
+    <section class="export-panel">
+      <h2>Final Answer Payload</h2>
+      <p class="subtitle">채점 가능한 문항은 grading_status가 gradable인 항목뿐입니다. 실제 제출/API 호출은 없습니다.</p>
+      <textarea id="exportText" spellcheck="false" placeholder="payload export 결과가 여기에 표시됩니다."></textarea>
+    </section>
+  </main>
+
+  <script>
+    const embeddedSample = {
+      schema: "subjective_student_review_ui_sample",
+      schema_version: "0.1",
+      external_api_calls: false,
+      test_id: "subjective_sample_test",
+      case_id: "person_05_guided_good",
+      student_id: "sample_student",
+      attempt_id: "attempt_001",
+      source: {
+        ocr_result: "vision_result/ocr_result_manual_vision_20.json",
+        eval_json: "eval/eval.json"
+      },
+      summary: {
+        total: 6,
+        safe_auto_grade_count: 1,
+        review_required_count: 2,
+        retake_required_count: 2,
+        retaken_count: 1,
+        blocked_unconfirmed_count: 1
+      },
+      items: [
+        {
+          question: 1,
+          state: "safe_auto_grade",
+          recognized: "1/2",
+          candidates: [],
+          warnings: [],
+          review_reasons: [],
+          evidence: {
+            original_crop: "samples/stress_test/person_04_guided_good/crops/q001.png",
+            enhanced_crop: "samples/stress_test/person_04_guided_good/enhanced_crops/q001.png",
+            retake_crop: null
+          },
+          timestamps: { recognized_at: "2026-06-14T10:00:00+09:00" },
+          retake_count: 0,
+          max_retake_count: 2,
+          retake_history: []
+        },
+        {
+          question: 4,
+          state: "review_required",
+          recognized: "7,C",
+          candidates: ["ㄱ,ㄷ", "ㄷ,ㄱ", "7,C"],
+          warnings: ["jamo_choice_confusion"],
+          review_reasons: ["ㄱ/ㄴ/ㄷ/ㄹ 선택지와 숫자/영문이 헷갈릴 수 있습니다."],
+          evidence: {
+            original_crop: "samples/stress_test/person_05_guided_good/crops/q004.png",
+            enhanced_crop: null,
+            retake_crop: null
+          },
+          timestamps: { recognized_at: "2026-06-14T10:00:00+09:00" },
+          retake_count: 0,
+          max_retake_count: 2,
+          retake_history: []
+        },
+        {
+          question: 9,
+          state: "review_required",
+          recognized: "x±2=4",
+          candidates: ["x+2=4", "x-2=4", "x±2=4"],
+          warnings: ["plus_minus_uncertain"],
+          review_reasons: ["+, -, ± 기호가 헷갈릴 수 있습니다."],
+          evidence: {
+            original_crop: "samples/stress_test/person_04_guided_good/crops/q019.png",
+            enhanced_crop: "samples/stress_test/person_04_guided_good/enhanced_crops/q019.png",
+            retake_crop: null
+          },
+          timestamps: { recognized_at: "2026-06-14T10:00:00+09:00" },
+          retake_count: 1,
+          max_retake_count: 2,
+          retake_history: [
+            {
+              attempt: 1,
+              retake_crop: "retakes/q009_attempt1.png",
+              recognized: "x±2=4",
+              result: "review_required",
+              retaken_at: "2026-06-14T10:04:00+09:00"
+            }
+          ]
+        },
+        {
+          question: 12,
+          state: "retake_required",
+          recognized: "",
+          candidates: [],
+          warnings: ["blank_or_missing", "possible_crop_cutoff"],
+          review_reasons: ["답안이 비어 있거나 crop에서 잘렸을 수 있습니다."],
+          evidence: {
+            original_crop: "samples/stress_test/person_04_guided_good/crops/q012.png",
+            enhanced_crop: "samples/stress_test/person_04_guided_good/enhanced_crops/q012.png",
+            retake_crop: null
+          },
+          timestamps: { recognized_at: "2026-06-14T10:00:00+09:00" },
+          retake_count: 0,
+          max_retake_count: 2,
+          retake_history: []
+        },
+        {
+          question: 13,
+          state: "blocked_unconfirmed",
+          recognized: "",
+          candidates: [],
+          warnings: ["blank_or_missing", "possible_crop_cutoff"],
+          review_reasons: ["재촬영 가능 횟수를 초과했습니다."],
+          evidence: {
+            original_crop: "samples/stress_test/person_04_guided_good/crops/q013.png",
+            enhanced_crop: "samples/stress_test/person_04_guided_good/enhanced_crops/q013.png",
+            retake_crop: "retakes/q013_attempt2.png"
+          },
+          timestamps: {
+            recognized_at: "2026-06-14T10:00:00+09:00",
+            retaken_at: "2026-06-14T10:08:00+09:00"
+          },
+          retake_count: 2,
+          max_retake_count: 2,
+          retake_history: [
+            {
+              attempt: 1,
+              retake_crop: "retakes/q013_attempt1.png",
+              recognized: "",
+              result: "retake_required",
+              retaken_at: "2026-06-14T10:05:00+09:00"
+            },
+            {
+              attempt: 2,
+              retake_crop: "retakes/q013_attempt2.png",
+              recognized: "",
+              result: "blocked_unconfirmed",
+              retaken_at: "2026-06-14T10:08:00+09:00"
+            }
+          ]
+        },
+        {
+          question: 14,
+          state: "retaken",
+          recognized: "3sqrt(2)",
+          candidates: [],
+          warnings: [],
+          review_reasons: [],
+          final_answer: "3sqrt(2)",
+          final_answer_source: "retake_recognized",
+          grading_status: "gradable",
+          confirmation_status: "retaken",
+          student_action: "retake",
+          evidence: {
+            original_crop: "samples/stress_test/person_04_guided_good/crops/q014.png",
+            enhanced_crop: "samples/stress_test/person_04_guided_good/enhanced_crops/q014.png",
+            retake_crop: "retakes/q014_attempt1.png"
+          },
+          timestamps: {
+            recognized_at: "2026-06-14T10:00:00+09:00",
+            retaken_at: "2026-06-14T10:06:00+09:00",
+            finalized_at: "2026-06-14T10:06:30+09:00"
+          },
+          retake_count: 1,
+          max_retake_count: 2,
+          retake_history: [
+            {
+              attempt: 1,
+              retake_crop: "retakes/q014_attempt1.png",
+              recognized: "3sqrt(2)",
+              result: "retaken",
+              retaken_at: "2026-06-14T10:06:00+09:00"
+            }
+          ]
+        }
+      ]
+    };
+
+    let currentData = embeddedSample;
+    let currentSourceLabel = "embedded_sample";
+    let decisions = new Map();
+
+    const $ = (id) => document.getElementById(id);
+
+    function asArray(value) {
+      if (!value) return [];
+      return Array.isArray(value) ? value : String(value).split(";").map((item) => item.trim()).filter(Boolean);
+    }
+
+    function itemState(item) {
+      if (item.state) return item.state;
+      if (item.confirmation_status === "retaken" || item.final_answer_source === "retake_recognized") return "retaken";
+      if (item.confirmation_status === "blocked_unconfirmed") return "blocked_unconfirmed";
+      if (item.confirmation_status === "retake_required" || item.grading_status === "blocked") return "retake_required";
+      if (item.review_required === true || item.confirmation_status === "pending_student_input") return "review_required";
+      return "safe_auto_grade";
+    }
+
+    function maxRetakeCount(item) {
+      const value = Number(item.max_retake_count ?? currentData.max_retake_count ?? 2);
+      return Number.isFinite(value) ? value : 2;
+    }
+
+    function retakeCount(item) {
+      const value = Number(item.retake_count || 0);
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    function retakeLimitExceeded(item) {
+      return retakeCount(item) >= maxRetakeCount(item);
+    }
+
+    function isAutoCompleteState(state) {
+      return state === "safe_auto_grade" || state === "retaken";
+    }
+
+    function qLabel(question) {
+      const value = Number(question);
+      return Number.isFinite(value) ? `Q${String(value).padStart(3, "0")}` : `Q${question}`;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function escapeAttr(value) {
+      return escapeHtml(value).replaceAll("`", "&#096;");
+    }
+
+    function setStatus(message) {
+      $("statusLine").textContent = message;
+    }
+
+    function summaryCounts(data) {
+      const items = data.items || [];
+      const total = data.summary?.total ?? items.length;
+      const safe = data.summary?.safe_auto_grade_count ?? items.filter((item) => itemState(item) === "safe_auto_grade").length;
+      const review = data.summary?.review_required_count ?? items.filter((item) => itemState(item) === "review_required").length;
+      const retake = data.summary?.retake_required_count ?? items.filter((item) => ["retake_required", "blocked_unconfirmed"].includes(itemState(item))).length;
+      return { total, safe, review, retake };
+    }
+
+    function updateStats(data) {
+      const counts = summaryCounts(data);
+      $("totalCount").textContent = counts.total;
+      $("safeCount").textContent = counts.safe;
+      $("reviewCount").textContent = counts.review;
+      $("retakeCount").textContent = counts.retake;
+    }
+
+    function imageFigure(title, path, alt) {
+      if (!path) {
+        return `
+          <figure>
+            <figcaption>${title}</figcaption>
+            <div class="crop-frame"><div class="missing-image">이미지 경로 없음</div></div>
+          </figure>
+        `;
+      }
+      return `
+        <figure>
+          <figcaption>${title}</figcaption>
+          <div class="crop-frame">
+            <img src="${escapeAttr(path)}" alt="${escapeAttr(alt)}" onerror="this.replaceWith(Object.assign(document.createElement('div'), {className: 'missing-image', textContent: '이미지를 열 수 없음: ${escapeAttr(path)}'}));">
+          </div>
+        </figure>
+      `;
+    }
+
+    function defaultDecision(item) {
+      const state = itemState(item);
+      const question = Number(item.question);
+      if (state === "safe_auto_grade") {
+        return {
+          question,
+          final_answer: String(item.recognized ?? ""),
+          final_answer_source: "safe_auto_grade",
+          student_action: "none",
+          confirmation_status: "not_required",
+          grading_status: "gradable",
+          decided_at: null
+        };
+      }
+      if (state === "retaken") {
+        return {
+          question,
+          final_answer: item.final_answer ?? String(item.recognized ?? ""),
+          final_answer_source: "retake_recognized",
+          student_action: "retake",
+          confirmation_status: "retaken",
+          grading_status: "gradable",
+          decided_at: item.timestamps?.finalized_at || item.timestamps?.retaken_at || null
+        };
+      }
+      if (state === "blocked_unconfirmed") {
+        return {
+          question,
+          final_answer: null,
+          final_answer_source: null,
+          student_action: "retake",
+          confirmation_status: "blocked_unconfirmed",
+          grading_status: "blocked",
+          decided_at: item.timestamps?.retaken_at || null
+        };
+      }
+      if (state === "retake_required") {
+        return {
+          question,
+          final_answer: null,
+          final_answer_source: null,
+          student_action: "retake",
+          confirmation_status: "retake_required",
+          grading_status: "blocked",
+          decided_at: null
+        };
+      }
+      return {
+        question,
+        final_answer: null,
+        final_answer_source: null,
+        student_action: null,
+        confirmation_status: "pending_student_input",
+        grading_status: "blocked",
+        decided_at: null
+      };
+    }
+
+    function renderSafeList(data) {
+      const safeList = $("safeList");
+      const safeItems = (data.items || []).filter((item) => isAutoCompleteState(itemState(item)));
+      safeList.innerHTML = safeItems.length
+        ? safeItems.map((item) => {
+          const state = itemState(item);
+          const label = state === "retaken" ? "재촬영 인식 완료" : "자동 인식 완료";
+          return `<span class="safe-chip">${qLabel(item.question)}: ${escapeHtml(item.final_answer || item.recognized)} (${label})</span>`;
+        }).join("")
+        : `<span class="subtitle">자동 인식 완료 문항이 없습니다.</span>`;
+    }
+
+    function renderCards(data) {
+      const cards = $("cards");
+      cards.innerHTML = "";
+      decisions = new Map();
+
+      for (const item of data.items || []) {
+        decisions.set(Number(item.question), defaultDecision(item));
+      }
+
+      const visibleItems = (data.items || []).filter((item) => !isAutoCompleteState(itemState(item)));
+      if (!visibleItems.length) {
+        cards.innerHTML = `<div class="card"><div class="card-body"><p>학생 확인이 필요한 문항이 없습니다.</p></div></div>`;
+        return;
+      }
+
+      for (const item of visibleItems) {
+        const state = itemState(item);
+        const question = Number(item.question);
+        const warnings = asArray(item.warnings);
+        const reasons = asArray(item.review_reasons);
+        const candidates = asArray(item.candidates);
+        const count = retakeCount(item);
+        const maxCount = maxRetakeCount(item);
+        const limitExceeded = state === "blocked_unconfirmed" || retakeLimitExceeded(item);
+        const isRetakeOnly = state === "retake_required" || state === "blocked_unconfirmed";
+        const candidateRows = candidates.map((candidate, index) => `
+          <label class="choice-row">
+            <input type="radio" name="candidate-${question}" value="${escapeAttr(candidate)}" ${index === 0 ? "checked" : ""}>
+            <span class="mono">${escapeHtml(candidate)}</span>
+          </label>
+        `).join("");
+
+        const card = document.createElement("article");
+        card.className = "card";
+        card.dataset.question = String(question);
+        card.dataset.state = state;
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="q-title">${qLabel(question)}</div>
+            <span class="badge ${isRetakeOnly ? "blocked" : "review"}">${state === "blocked_unconfirmed" ? "blocked_unconfirmed" : isRetakeOnly ? "retake_required" : "review_required"}</span>
+          </div>
+          <div class="card-body">
+            <div class="image-grid">
+              ${imageFigure("원본 crop", item.evidence?.original_crop, `${qLabel(question)} original crop`)}
+              ${imageFigure("enhanced crop", item.evidence?.enhanced_crop, `${qLabel(question)} enhanced crop`)}
+            </div>
+            <div class="details">
+              <div class="field">
+                <span class="label">recognized</span>
+                <div class="mono">${escapeHtml(item.recognized || "(비어 있음)")}</div>
+              </div>
+              <div class="field">
+                <span class="label">warnings</span>
+                <div class="pill-list">${warnings.map((warning) => `<span class="pill">${escapeHtml(warning)}</span>`).join("") || "<span class=\"mono\">없음</span>"}</div>
+              </div>
+              <div class="field">
+                <span class="label">review reasons</span>
+                <div class="mono">${escapeHtml(reasons.join("\n") || "없음")}</div>
+              </div>
+              <div class="field">
+                <span class="label">문항별 재촬영</span>
+                <div class="retake-status ${limitExceeded ? "blocked" : ""}">
+                  재촬영 횟수: ${count} / ${maxCount}
+                  ${limitExceeded ? "<br>재촬영 가능 횟수를 초과했습니다." : ""}
+                </div>
+              </div>
+              ${isRetakeOnly ? "" : `
+                <div class="field">
+                  <span class="label">후보 선택</span>
+                  <div class="choices">${candidateRows || "<span class=\"mono\">후보 없음</span>"}</div>
+                </div>
+                <div class="action-line">
+                  <button type="button" class="primary select-btn">후보 선택 확정</button>
+                </div>
+                <div class="field">
+                  <label for="manual-${question}">직접 입력</label>
+                  <input class="manual-input" id="manual-${question}" placeholder="직접 입력은 review_required 문항에만 허용됩니다.">
+                </div>
+                <div class="action-line">
+                  <button type="button" class="primary manual-btn">직접 입력 확정</button>
+                </div>
+              `}
+              <div class="action-line">
+                <button type="button" class="retake retake-btn" ${limitExceeded ? "disabled" : ""}>${question}번 답안칸만 다시 촬영</button>
+                <span class="decision pending">미확정</span>
+              </div>
+            </div>
+          </div>
+        `;
+        cards.appendChild(card);
+      }
+
+      wireCards();
+    }
+
+    function wireCards() {
+      document.querySelectorAll(".card").forEach((card) => {
+        const question = Number(card.dataset.question);
+        const state = card.dataset.state;
+        const decisionBadge = card.querySelector(".decision");
+        const markDecision = (label, done) => {
+          decisionBadge.textContent = label;
+          decisionBadge.className = `decision ${done ? "done" : "pending"}`;
+        };
+
+        const selectBtn = card.querySelector(".select-btn");
+        if (selectBtn) {
+          selectBtn.addEventListener("click", () => {
+            const selected = card.querySelector(`input[name="candidate-${question}"]:checked`);
+            const finalAnswer = selected?.value || "";
+            decisions.set(question, {
+              question,
+              final_answer: finalAnswer,
+              final_answer_source: "student_selected",
+              student_action: "select_candidate",
+              confirmation_status: "student_finalized",
+              grading_status: "gradable",
+              decided_at: new Date().toISOString()
+            });
+            markDecision("후보 선택 확정", true);
+            updateExportText();
+          });
+        }
+
+        const manualBtn = card.querySelector(".manual-btn");
+        if (manualBtn) {
+          manualBtn.addEventListener("click", () => {
+            const input = card.querySelector(".manual-input");
+            const finalAnswer = (input?.value || "").trim();
+            if (!finalAnswer) {
+              markDecision("직접 입력값 필요", false);
+              return;
+            }
+            decisions.set(question, {
+              question,
+              final_answer: finalAnswer,
+              final_answer_source: "student_manual_input",
+              student_action: "manual_input",
+              confirmation_status: "student_finalized",
+              grading_status: "gradable",
+              decided_at: new Date().toISOString()
+            });
+            markDecision("직접 입력 확정", true);
+            updateExportText();
+          });
+        }
+
+        card.querySelector(".retake-btn").addEventListener("click", () => {
+          decisions.set(question, {
+            question,
+            final_answer: null,
+            final_answer_source: null,
+            student_action: "retake",
+            confirmation_status: "retake_required",
+            grading_status: "blocked",
+            decided_at: new Date().toISOString()
+          });
+          markDecision(`${question}번 재촬영 선택`, true);
+          updateExportText();
+        });
+      });
+    }
+
+    function exportItem(item) {
+      const question = Number(item.question);
+      const decision = decisions.get(question) || defaultDecision(item);
+      const state = itemState(item);
+      const evidence = item.evidence || {};
+      const source = decision.final_answer_source;
+      const gradable = decision.grading_status === "gradable";
+      const finalizedAt = gradable ? decision.decided_at || item.timestamps?.recognized_at || null : null;
+      const currentRetakeCount = retakeCount(item);
+      const maxCount = maxRetakeCount(item);
+      const history = Array.isArray(item.retake_history) ? item.retake_history : [];
+      return {
+        question,
+        recognized: item.recognized ?? "",
+        candidates: asArray(item.candidates),
+        final_answer: decision.final_answer,
+        final_answer_source: source,
+        grading_status: decision.grading_status,
+        confirmation_status: decision.confirmation_status,
+        student_action: decision.student_action,
+        is_correct: null,
+        score: null,
+        warnings: asArray(item.warnings),
+        review_reasons: asArray(item.review_reasons),
+        evidence: {
+          original_crop: evidence.original_crop || null,
+          enhanced_crop: evidence.enhanced_crop || null,
+          retake_crop: evidence.retake_crop || null
+        },
+        timestamps: {
+          recognized_at: item.timestamps?.recognized_at || null,
+          student_finalized_at: source === "student_selected" || source === "student_manual_input" ? decision.decided_at || null : null,
+          retaken_at: decision.student_action === "retake" ? decision.decided_at || null : null,
+          finalized_at: finalizedAt
+        },
+        retake_count: currentRetakeCount,
+        max_retake_count: maxCount,
+        retake_history: history
+      };
+    }
+
+    function buildExport() {
+      const items = (currentData.items || []).map(exportItem);
+      const gradable = items.filter((item) => item.grading_status === "gradable");
+      const blocked = items.filter((item) => item.grading_status === "blocked");
+      return {
+        schema: "subjective_final_answer_payload",
+        schema_version: "0.1",
+        external_api_calls: false,
+        test_id: currentData.test_id || null,
+        case_id: currentData.case_id || null,
+        student_id: currentData.student_id || null,
+        attempt_id: currentData.attempt_id || null,
+        source: {
+          ...(currentData.source || {}),
+          student_review_ui_sample: currentSourceLabel
+        },
+        summary: {
+          total: items.length,
+          gradable_count: gradable.length,
+          blocked_count: blocked.length,
+          safe_auto_grade_count: items.filter((item) => item.final_answer_source === "safe_auto_grade").length,
+          student_selected_count: items.filter((item) => item.final_answer_source === "student_selected").length,
+          student_manual_input_count: items.filter((item) => item.final_answer_source === "student_manual_input").length,
+          retaken_count: items.filter((item) => item.final_answer_source === "retake_recognized").length,
+          retake_required_count: items.filter((item) => item.confirmation_status === "retake_required").length,
+          blocked_unconfirmed_count: items.filter((item) => item.confirmation_status === "blocked_unconfirmed").length
+        },
+        items
+      };
+    }
+
+    function updateExportText() {
+      $("exportText").value = JSON.stringify(buildExport(), null, 2);
+    }
+
+    function render(data, sourceLabel) {
+      currentData = data;
+      currentSourceLabel = sourceLabel;
+      updateStats(data);
+      renderSafeList(data);
+      renderCards(data);
+      updateExportText();
+      const counts = summaryCounts(data);
+      setStatus(`${sourceLabel} 로드됨: review_required ${counts.review}개, retake_required ${counts.retake}개 표시`);
+    }
+
+    async function loadAdjacentSample() {
+      try {
+        const response = await fetch("student_review_ui_mock_sample.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        render(await response.json(), "student_review_ui_mock_sample.json");
+      } catch (error) {
+        render(embeddedSample, "embedded_sample");
+        setStatus(`내장 샘플 로드됨. file:// 환경에서는 JSON fetch가 막힐 수 있습니다. (${error.message})`);
+      }
+    }
+
+    $("loadSampleBtn").addEventListener("click", loadAdjacentSample);
+    $("jsonFile").addEventListener("change", async (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        render(JSON.parse(text), file.name);
+      } catch (error) {
+        setStatus(`JSON 파일을 읽지 못했습니다: ${error.message}`);
+      }
+    });
+    $("exportBtn").addEventListener("click", updateExportText);
+    $("downloadBtn").addEventListener("click", () => {
+      const payload = JSON.stringify(buildExport(), null, 2) + "\n";
+      const blob = new Blob([payload], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const caseId = currentData.case_id;
+      link.href = url;
+      link.download = caseId ? `student_review_export_${String(caseId).replace(/[^a-zA-Z0-9_-]+/g, "_")}.json` : "student_review_export.json";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    loadAdjacentSample();
+  </script>
+</body>
+</html>

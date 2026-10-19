@@ -1,0 +1,83 @@
+{
+  "ok": true,
+  "mode": "subjective_handwriting_recognition",
+  "engine": "mathpix",
+  "dry_run": false,
+  "network_allowed": true,
+  "endpoint": "https://api.mathpix.com/v3/text",
+  "items": [
+    {
+      "question": 1,
+      "cropPath": "tools/subjective_sheet_lab/samples/output/v2_crops/q001.png",
+      "recognized": "1",
+      "final": "1",
+      "status": "recognized",
+      "confidence": null,
+      "warnings": [],
+      "raw": {
+        "text": "1",
+        "latex_styled": "1"
+      }
+    },
+    {
+      "question": 2,
+      "cropPath": "tools/subjective_sheet_lab/samples/output/v2_crops/q002.png",
+      "recognized": "-3",
+      "final": "-3",
+      "status": "recognized",
+      "confidence": null,
+      "warnings": [],
+      "raw": {
+        "text": "-3",
+        "latex_styled": "-3"
+      }
+    },
+    {
+      "question": 3,
+      "cropPath": "tools/subjective_sheet_lab/samples/output/v2_crops/q003.png",
+      "recognized": "x=2",
+      "final": "x=2",
+      "status": "recognized",
+      "confidence": null,
+      "warnings": [],
+      "raw": {
+        "text": "x=2",
+        "latex_styled": "x=2"
+      }
+    },
+    {
+      "question": 4,
+      "cropPath": "tools/subjective_sheet_lab/samples/output/v2_crops/q004.png",
+      "recognized": "0.5",
+      "final": "0.5",
+      "status": "recognized",
+      "confidence": null,
+      "warnings": [],
+      "raw": {
+        "text": "0.5",
+        "latex_styled": "0.5"
+      }
+    },
+    {
+      "question": 5,
+      "cropPath": "tools/subjective_sheet_lab/samples/output/v2_crops/q005.png",
+      "recognized": "1/2",
+      "final": "1/2",
+      "status": "recognized",
+      "confidence": null,
+      "warnings": [],
+      "raw": {
+        "text": "1/2",
+        "latex_styled": "\\frac{1}{2}"
+      }
+    }
+  ],
+  "warnings": [],
+  "policy": {
+    "student_flow": "review_auto_recognition_then_fix_only_problem_items",
+    "manual_first_entry": false,
+    "auto_grading_connected": false,
+    "max_default_limit": 5,
+    "credentials_source": "environment_variables_only"
+  }
+}

@@ -1,0 +1,54 @@
+# Keep repository searches and quick audits out of generated/heavy folders.
+.venv/
+.venv_broken_*/
+.agents/
+.codex/
+.git/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+*.pyc
+*.pyo
+
+# Local/generated runtime data.
+data/admin_notes_backups/
+data/archive/
+data/diagnostics/
+data/drafts/
+data/google_docs_append_logs/
+data/transcripts/
+data/uploads/
+data/recordings/
+data/results/
+data/tmp/
+data/local_consumed_admin_notes.json
+generated/
+tmp/
+backups/
+counsel-note_BACKUPS/
+_admin_api_debug/
+_debug_audio/
+tests_api_snapshot/
+
+# Large or disposable artifacts.
+*.zip
+*.log
+
+# Existing logs, CSV results, recordings, transcripts, and app output snapshots.
+data/**/*.log
+data/**/*_log*.csv
+data/**/*log*.csv
+data/**/*_result*.csv
+data/**/*result*.csv
+data/**/*results*.csv
+data/**/*transcript*.txt
+data/**/*transcript*.json
+data/**/*.wav
+data/**/*.mp3
+data/**/*.m4a
+data/**/*.webm
+data/**/*.mp4
+data/**/*.flac
+data/**/*.aac
+data/**/*.srt
+data/**/*.vtt

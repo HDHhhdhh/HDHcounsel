@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "mode": "subjective_handwriting_recognition",
+  "engine": "manual_vision_merged",
+  "items": [
+    {"question": 1, "cropPath": "q001.png", "recognized": "1", "final": "1", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 2, "cropPath": "q002.png", "recognized": "-3", "final": "-3", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 3, "cropPath": "q003.png", "recognized": "x=2", "final": "x=2", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 4, "cropPath": "q004.png", "recognized": "sqrt(3)", "final": "sqrt(3)", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 5, "cropPath": "q005.png", "recognized": "1/2", "final": "1/2", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 6, "cropPath": "q006.png", "recognized": "0", "final": "0", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 7, "cropPath": "q007.png", "recognized": "5", "final": "5", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 8, "cropPath": "q008.png", "recognized": "2x+1", "final": "2x+1", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 9, "cropPath": "q009.png", "recognized": "3sqrt(2)", "final": "3sqrt(2)", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 10, "cropPath": "q010.png", "recognized": "6", "final": "6", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 11, "cropPath": "q011.png", "recognized": "256", "final": "256", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 12, "cropPath": "q012.png", "recognized": "9/2", "final": "9/2", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 13, "cropPath": "q013.png", "recognized": "1,3", "final": "1,3", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 14, "cropPath": "q014.png", "recognized": "1<=x<=3", "final": "1<=x<=3", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 15, "cropPath": "q015.png", "recognized": "-1<x<5", "final": "-1<x<5", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 16, "cropPath": "q016.png", "recognized": "y=3", "final": "y=3", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 17, "cropPath": "q017.png", "recognized": "1/2,9/2", "final": "1/2,9/2", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 18, "cropPath": "q018.png", "recognized": "129/2", "final": "129/2", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 19, "cropPath": "q019.png", "recognized": "281", "final": "281", "status": "recognized", "confidence": null, "warnings": []},
+    {"question": 20, "cropPath": "q020.png", "recognized": "26sqrt(21)", "final": "26sqrt(21)", "status": "recognized", "confidence": null, "warnings": []}
+  ],
+  "warnings": [],
+  "policy": {
+    "student_flow": "review_auto_recognition_then_fix_only_problem_items",
+    "manual_first_entry": false,
+    "auto_grading_connected": false,
+    "manual_web_ui_only": true
+  }
+}

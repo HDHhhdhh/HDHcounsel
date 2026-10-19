@@ -1,0 +1,176 @@
+{
+  "schema": "subjective_student_review_ui_sample",
+  "schema_version": "0.1",
+  "external_api_calls": false,
+  "test_id": "subjective_sample_test",
+  "case_id": "person_05_guided_good",
+  "student_id": "sample_student",
+  "attempt_id": "attempt_001",
+  "source": {
+    "ocr_result": "vision_result/ocr_result_manual_vision_20.json",
+    "eval_json": "eval/eval.json"
+  },
+  "summary": {
+    "total": 6,
+    "safe_auto_grade_count": 1,
+    "review_required_count": 2,
+    "retake_required_count": 2,
+    "retaken_count": 1,
+    "blocked_unconfirmed_count": 1
+  },
+  "items": [
+    {
+      "question": 1,
+      "state": "safe_auto_grade",
+      "recognized": "1/2",
+      "candidates": [],
+      "warnings": [],
+      "review_reasons": [],
+      "evidence": {
+        "original_crop": "samples/stress_test/person_04_guided_good/crops/q001.png",
+        "enhanced_crop": "samples/stress_test/person_04_guided_good/enhanced_crops/q001.png",
+        "retake_crop": null
+      },
+      "timestamps": {
+        "recognized_at": "2026-06-14T10:00:00+09:00"
+      },
+      "retake_count": 0,
+      "max_retake_count": 2,
+      "retake_history": []
+    },
+    {
+      "question": 4,
+      "state": "review_required",
+      "recognized": "7,C",
+      "candidates": ["ㄱ,ㄷ", "ㄷ,ㄱ", "7,C"],
+      "warnings": ["jamo_choice_confusion"],
+      "review_reasons": ["ㄱ/ㄴ/ㄷ/ㄹ 선택지와 숫자/영문이 헷갈릴 수 있습니다."],
+      "evidence": {
+        "original_crop": "samples/stress_test/person_05_guided_good/crops/q004.png",
+        "enhanced_crop": null,
+        "retake_crop": null
+      },
+      "timestamps": {
+        "recognized_at": "2026-06-14T10:00:00+09:00"
+      },
+      "retake_count": 0,
+      "max_retake_count": 2,
+      "retake_history": []
+    },
+    {
+      "question": 9,
+      "state": "review_required",
+      "recognized": "x±2=4",
+      "candidates": ["x+2=4", "x-2=4", "x±2=4"],
+      "warnings": ["plus_minus_uncertain"],
+      "review_reasons": ["+, -, ± 기호가 헷갈릴 수 있습니다."],
+      "evidence": {
+        "original_crop": "samples/stress_test/person_04_guided_good/crops/q019.png",
+        "enhanced_crop": "samples/stress_test/person_04_guided_good/enhanced_crops/q019.png",
+        "retake_crop": null
+      },
+      "timestamps": {
+        "recognized_at": "2026-06-14T10:00:00+09:00"
+      },
+      "retake_count": 1,
+      "max_retake_count": 2,
+      "retake_history": [
+        {
+          "attempt": 1,
+          "retake_crop": "retakes/q009_attempt1.png",
+          "recognized": "x±2=4",
+          "result": "review_required",
+          "retaken_at": "2026-06-14T10:04:00+09:00"
+        }
+      ]
+    },
+    {
+      "question": 12,
+      "state": "retake_required",
+      "recognized": "",
+      "candidates": [],
+      "warnings": ["blank_or_missing", "possible_crop_cutoff"],
+      "review_reasons": ["답안이 비어 있거나 crop에서 잘렸을 수 있습니다."],
+      "evidence": {
+        "original_crop": "samples/stress_test/person_04_guided_good/crops/q012.png",
+        "enhanced_crop": "samples/stress_test/person_04_guided_good/enhanced_crops/q012.png",
+        "retake_crop": null
+      },
+      "timestamps": {
+        "recognized_at": "2026-06-14T10:00:00+09:00"
+      },
+      "retake_count": 0,
+      "max_retake_count": 2,
+      "retake_history": []
+    },
+    {
+      "question": 13,
+      "state": "blocked_unconfirmed",
+      "recognized": "",
+      "candidates": [],
+      "warnings": ["blank_or_missing", "possible_crop_cutoff"],
+      "review_reasons": ["재촬영 가능 횟수를 초과했습니다."],
+      "evidence": {
+        "original_crop": "samples/stress_test/person_04_guided_good/crops/q013.png",
+        "enhanced_crop": "samples/stress_test/person_04_guided_good/enhanced_crops/q013.png",
+        "retake_crop": "retakes/q013_attempt2.png"
+      },
+      "timestamps": {
+        "recognized_at": "2026-06-14T10:00:00+09:00",
+        "retaken_at": "2026-06-14T10:08:00+09:00"
+      },
+      "retake_count": 2,
+      "max_retake_count": 2,
+      "retake_history": [
+        {
+          "attempt": 1,
+          "retake_crop": "retakes/q013_attempt1.png",
+          "recognized": "",
+          "result": "retake_required",
+          "retaken_at": "2026-06-14T10:05:00+09:00"
+        },
+        {
+          "attempt": 2,
+          "retake_crop": "retakes/q013_attempt2.png",
+          "recognized": "",
+          "result": "blocked_unconfirmed",
+          "retaken_at": "2026-06-14T10:08:00+09:00"
+        }
+      ]
+    },
+    {
+      "question": 14,
+      "state": "retaken",
+      "recognized": "3sqrt(2)",
+      "candidates": [],
+      "warnings": [],
+      "review_reasons": [],
+      "final_answer": "3sqrt(2)",
+      "final_answer_source": "retake_recognized",
+      "grading_status": "gradable",
+      "confirmation_status": "retaken",
+      "student_action": "retake",
+      "evidence": {
+        "original_crop": "samples/stress_test/person_04_guided_good/crops/q014.png",
+        "enhanced_crop": "samples/stress_test/person_04_guided_good/enhanced_crops/q014.png",
+        "retake_crop": "retakes/q014_attempt1.png"
+      },
+      "timestamps": {
+        "recognized_at": "2026-06-14T10:00:00+09:00",
+        "retaken_at": "2026-06-14T10:06:00+09:00",
+        "finalized_at": "2026-06-14T10:06:30+09:00"
+      },
+      "retake_count": 1,
+      "max_retake_count": 2,
+      "retake_history": [
+        {
+          "attempt": 1,
+          "retake_crop": "retakes/q014_attempt1.png",
+          "recognized": "3sqrt(2)",
+          "result": "retaken",
+          "retaken_at": "2026-06-14T10:06:00+09:00"
+        }
+      ]
+    }
+  ]
+}

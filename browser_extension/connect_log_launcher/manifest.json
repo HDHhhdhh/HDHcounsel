@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "5A Connect Log Web Launcher",
+  "version": "1.0.0",
+  "description": "Adds a Connect Log desktop launcher to the administrator web page.",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://192.168.0.5:8003/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

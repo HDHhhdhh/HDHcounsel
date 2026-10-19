@@ -1,0 +1,175 @@
+{
+  "test_id": "subjective_sample",
+  "test_name": "Subjective Answer Key Sample",
+  "description": "Example answer key for subjective OCR/Vision evaluation. It is not connected to the student page or grading API.",
+  "jamo_choice_example": {
+    "question": 4,
+    "canonical_answer": "ㄱ,ㄷ",
+    "accepted_answers": ["ㄱ,ㄷ", "ㄷ,ㄱ"],
+    "review_if_contains": ["?", "7", "C", "4", "2", "L"],
+    "order_insensitive": true,
+    "normalize": true
+  },
+  "questions": [
+    {
+      "question": 1,
+      "canonical_answer": "1",
+      "accepted_answers": ["1"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 2,
+      "canonical_answer": "-3",
+      "accepted_answers": ["-3"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 3,
+      "canonical_answer": "x=2",
+      "accepted_answers": ["x=2", "2"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 4,
+      "canonical_answer": "sqrt(3)",
+      "accepted_answers": ["sqrt(3)", "\u221a(3)", "\u221a3"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 5,
+      "canonical_answer": "1/2",
+      "accepted_answers": ["1/2", "0.5"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 6,
+      "canonical_answer": "0",
+      "accepted_answers": ["0"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 7,
+      "canonical_answer": "5",
+      "accepted_answers": ["5"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 8,
+      "canonical_answer": "2x+1",
+      "accepted_answers": ["2x+1"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 9,
+      "canonical_answer": "3sqrt(2)",
+      "accepted_answers": ["3sqrt(2)", "3\u221a(2)", "3\u221a2"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 10,
+      "canonical_answer": "0",
+      "accepted_answers": ["0"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 11,
+      "canonical_answer": "256",
+      "accepted_answers": ["256"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 12,
+      "canonical_answer": "9/2",
+      "accepted_answers": ["9/2"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 13,
+      "canonical_answer": "1,3",
+      "accepted_answers": ["1,3", "3,1"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": true,
+      "normalize": true
+    },
+    {
+      "question": 14,
+      "canonical_answer": "1<=x<=3",
+      "accepted_answers": ["1<=x<=3"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 15,
+      "canonical_answer": "-1<x<5",
+      "accepted_answers": ["-1<x<5"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 16,
+      "canonical_answer": "y=3",
+      "accepted_answers": ["y=3", "3"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 17,
+      "canonical_answer": "1/2,9/2",
+      "accepted_answers": ["1/2,9/2", "9/2,1/2"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": true,
+      "normalize": true
+    },
+    {
+      "question": 18,
+      "canonical_answer": "129/2",
+      "accepted_answers": ["129/2"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 19,
+      "canonical_answer": "281",
+      "accepted_answers": ["281"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    },
+    {
+      "question": 20,
+      "canonical_answer": "26sqrt(21)",
+      "accepted_answers": ["26sqrt(21)", "26\u221a(21)", "26\u221a21"],
+      "review_if_contains": ["?", "\u00b1", "+/-"],
+      "order_insensitive": false,
+      "normalize": true
+    }
+  ]
+}

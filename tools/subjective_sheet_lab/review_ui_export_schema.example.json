@@ -1,0 +1,36 @@
+{
+  "schema": "subjective_review_ui_export",
+  "schema_version": "0.1",
+  "external_api_calls": false,
+  "test_id": "sample_test",
+  "case_id": "person_05_guided_good",
+  "source": {
+    "eval_json": "eval/eval.json",
+    "review_ui_sample": "review_ui_mock_sample.json"
+  },
+  "summary": {
+    "total": 20,
+    "safe_auto_grade_count": 17,
+    "review_required_count": 3,
+    "confirmed_count": 3,
+    "pending_count": 0
+  },
+  "decisions": [
+    {
+      "question": 4,
+      "status": "confirmed",
+      "recognized": "7,C",
+      "final": "ㄱ,ㄷ",
+      "action": "use_candidate",
+      "confirmed": true,
+      "warnings": [
+        "jamo_choice_confusion"
+      ],
+      "review_reasons": [
+        "recognized contains confusable characters for ㄱ/ㄴ/ㄷ/ㄹ choice answer"
+      ],
+      "confirmed_by": "manual_review",
+      "confirmed_at": null
+    }
+  ]
+}

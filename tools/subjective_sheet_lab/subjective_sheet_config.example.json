@@ -1,0 +1,35 @@
+{
+  "test_id": "subjective_unit_test_sample",
+  "test_name": "주관식 단원평가 샘플",
+  "question_count": 20,
+  "answer_text_format": "line_based",
+  "page": {
+    "width_px": 2480,
+    "height_px": 3508,
+    "dpi": 300
+  },
+  "marker": {
+    "size_px": 128,
+    "inset_px": 110,
+    "quiet_zone_px": 70
+  },
+  "layout": {
+    "top_content_start_px": 720,
+    "bottom_margin_px": 390,
+    "column_gap_px": 150,
+    "side_margin_px": 340,
+    "row_gap_px": 22,
+    "answer_box_inner_inset_px": 34
+  },
+  "box_style": {
+    "columns": 2,
+    "rows_per_column": 10,
+    "box_height_px": 220,
+    "answer_area_inset_px": {
+      "left": 145,
+      "top": 58,
+      "right": 95,
+      "bottom": 26
+    }
+  }
+}

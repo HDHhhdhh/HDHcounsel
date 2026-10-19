@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Review Required UI Mock</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f5f7fb;
+      --panel: #ffffff;
+      --ink: #172033;
+      --muted: #68758b;
+      --line: #d8e0ed;
+      --brand: #2458d3;
+      --brand-dark: #163d96;
+      --warn: #a33b10;
+      --soft-warn: #fff2ea;
+      --ok: #12633d;
+      --soft-ok: #eaf8f0;
+      --shadow: 0 10px 28px rgba(30, 45, 70, 0.09);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Malgun Gothic", "Apple SD Gothic Neo", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.5;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+    }
+
+    header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: 28px;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    button, .file-label {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      color: var(--ink);
+      padding: 9px 12px;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    button.primary {
+      border-color: var(--brand);
+      background: var(--brand);
+      color: #fff;
+    }
+
+    button.primary:hover { background: var(--brand-dark); }
+    button:hover, .file-label:hover { border-color: #9db0cc; }
+    input[type="file"] { display: none; }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .stat .label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .stat .value {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .status-line {
+      min-height: 24px;
+      color: var(--muted);
+      font-size: 14px;
+      margin: 8px 0 14px;
+    }
+
+    .cards {
+      display: grid;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcff;
+    }
+
+    .q-title {
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 26px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: var(--soft-warn);
+      color: var(--warn);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .card-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+      gap: 18px;
+      padding: 16px;
+    }
+
+    .image-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    figcaption {
+      padding: 8px 10px;
+      background: #f0f4fa;
+      color: var(--muted);
+      font-size: 13px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .crop-frame {
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .crop-frame img {
+      max-width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      border: 1px solid #edf1f6;
+    }
+
+    .missing-image {
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      padding: 28px 10px;
+    }
+
+    .details {
+      display: grid;
+      gap: 12px;
+      align-content: start;
+    }
+
+    .field {
+      display: grid;
+      gap: 5px;
+    }
+
+    .field label, .field .label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .mono {
+      font-family: Consolas, "Courier New", monospace;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .pill {
+      border: 1px solid #efc4ad;
+      border-radius: 999px;
+      background: var(--soft-warn);
+      color: var(--warn);
+      padding: 4px 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .choices {
+      display: grid;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fbfcff;
+    }
+
+    .choice-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 30px;
+    }
+
+    .choice-row input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+    }
+
+    .final-input {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font: inherit;
+    }
+
+    .confirm-line {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .confirmed {
+      color: var(--ok);
+      background: var(--soft-ok);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .export-panel {
+      margin-top: 18px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .export-panel textarea {
+      width: 100%;
+      min-height: 220px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 900px) {
+      header, .card-body {
+        grid-template-columns: 1fr;
+        display: grid;
+      }
+
+      .toolbar {
+        justify-content: flex-start;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 620px) {
+      main {
+        width: min(100% - 20px, 1180px);
+        padding-top: 18px;
+      }
+
+      h1 { font-size: 23px; }
+      .image-grid { grid-template-columns: 1fr; }
+      .card-header { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Review Required Mock</h1>
+        <p class="subtitle">서버/API 없이 review_required 문항만 확인하는 독립 HTML mock입니다.</p>
+      </div>
+      <div class="toolbar" aria-label="도구">
+        <button type="button" id="loadSampleBtn">샘플 다시 로드</button>
+        <label class="file-label" for="jsonFile">JSON 파일 선택</label>
+        <input id="jsonFile" type="file" accept="application/json,.json">
+        <button type="button" class="primary" id="exportBtn">선택값 export</button>
+        <button type="button" id="downloadBtn">JSON 다운로드</button>
+      </div>
+    </header>
+
+    <section class="stats" aria-label="요약">
+      <div class="stat"><span class="label">전체 문항</span><span class="value" id="totalCount">0</span></div>
+      <div class="stat"><span class="label">safe_auto_grade</span><span class="value" id="safeCount">0</span></div>
+      <div class="stat"><span class="label">review_required</span><span class="value" id="reviewCount">0</span></div>
+    </section>
+
+    <div class="status-line" id="statusLine"></div>
+    <section class="cards" id="cards"></section>
+
+    <section class="export-panel">
+      <h2>Export JSON</h2>
+      <p class="subtitle">확정 버튼을 누르지 않은 문항도 현재 선택값 기준으로 export됩니다. 실제 제출/채점/API 호출은 없습니다.</p>
+      <textarea id="exportText" spellcheck="false" placeholder="선택값 export 결과가 여기에 표시됩니다."></textarea>
+    </section>
+  </main>
+
+  <script>
+    const embeddedSample = {
+      ok: true,
+      mode: "subjective_review_ui_mock_embedded_sample",
+      test_id: "subjective_review_mock",
+      test_name: "Review Required UI Mock",
+      case_id: "review_ui_mock_sample",
+      source: {
+        eval_json: "eval/eval.json",
+        review_ui_sample: "review_ui_mock_sample.json"
+      },
+      summary: {
+        total: 20,
+        safe_auto_grade_count: 17,
+        review_required_count: 3
+      },
+      items: [
+        {
+          question: 4,
+          review_required: true,
+          expected: "ㄱ,ㄷ",
+          recognized: "7,C",
+          final: "7,C",
+          status: "needs_review",
+          warnings: ["manual_read_uncertain", "jamo_choice_confusion"],
+          review_reasons: ["jamo_choice_confusion", "review_if_contains:7", "review_if_contains:C"],
+          cropPath: "samples/stress_test/person_05_guided_good/crops/q004.png",
+          enhancedCropPath: "",
+          candidates: ["ㄱ,ㄷ", "ㄷ,ㄱ", "7,C"],
+          note: "ㄱ/ㄷ 선택지가 7/C처럼 읽힌 예시"
+        },
+        {
+          question: 6,
+          review_required: true,
+          expected: "ㄴ,ㄹ",
+          recognized: "4,2",
+          final: "4,2",
+          status: "needs_review",
+          warnings: ["manual_read_uncertain", "jamo_choice_confusion"],
+          review_reasons: ["jamo_choice_confusion", "review_if_contains:4", "review_if_contains:2"],
+          cropPath: "samples/stress_test/person_05_guided_good/crops/q006.png",
+          enhancedCropPath: "",
+          candidates: ["ㄴ,ㄹ", "ㄹ,ㄴ", "4,2"],
+          note: "ㄴ/ㄹ 선택지가 4/2처럼 읽힌 예시"
+        },
+        {
+          question: 19,
+          review_required: true,
+          expected: "x+2=4",
+          recognized: "x±2=4",
+          final: "x±2=4",
+          status: "needs_review",
+          warnings: ["plus_minus_uncertain", "manual_read_uncertain"],
+          review_reasons: ["plus_minus_uncertain"],
+          cropPath: "samples/stress_test/person_04_guided_good/crops/q019.png",
+          enhancedCropPath: "samples/stress_test/person_04_guided_good/enhanced_crops/q019.png",
+          candidates: ["x+2=4", "x-2=4", "x±2=4"],
+          note: "+와 ± 구분이 필요한 예시"
+        }
+      ]
+    };
+
+    let currentData = embeddedSample;
+    let currentSource = { eval_json: "eval/eval.json", review_ui_sample: "embedded_sample" };
+    let decisions = new Map();
+    const allowedActions = new Set(["use_recognized", "use_candidate", "manual_override", "keep_review_required"]);
+
+    const $ = (id) => document.getElementById(id);
+
+    function normalizeAction(action) {
+      return allowedActions.has(action) ? action : "manual_override";
+    }
+
+    function asArray(value) {
+      if (!value) return [];
+      return Array.isArray(value) ? value : String(value).split(";").map((item) => item.trim()).filter(Boolean);
+    }
+
+    function qLabel(question) {
+      const value = Number(question);
+      return Number.isFinite(value) ? `Q${String(value).padStart(3, "0")}` : `Q${question}`;
+    }
+
+    function reviewItems(data) {
+      return (data.items || []).filter((item) => item.review_required === true);
+    }
+
+    function setStatus(message) {
+      $("statusLine").textContent = message;
+    }
+
+    function updateStats(data) {
+      const items = data.items || [];
+      const summary = data.summary || {};
+      const review = reviewItems(data);
+      const total = summary.total ?? items.length;
+      const safe = summary.safe_auto_grade_count ?? Math.max(0, total - review.length);
+      $("totalCount").textContent = total;
+      $("safeCount").textContent = safe;
+      $("reviewCount").textContent = summary.review_required_count ?? review.length;
+    }
+
+    function imageFigure(title, path, alt) {
+      if (!path) {
+        return `
+          <figure>
+            <figcaption>${title}</figcaption>
+            <div class="crop-frame"><div class="missing-image">이미지 경로 없음</div></div>
+          </figure>
+        `;
+      }
+      return `
+        <figure>
+          <figcaption>${title}</figcaption>
+          <div class="crop-frame">
+            <img src="${escapeAttr(path)}" alt="${escapeAttr(alt)}" onerror="this.replaceWith(Object.assign(document.createElement('div'), {className: 'missing-image', textContent: '이미지를 열 수 없음: ${escapeAttr(path)}'}));">
+          </div>
+        </figure>
+      `;
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function escapeAttr(value) {
+      return escapeHtml(value).replaceAll("`", "&#096;");
+    }
+
+    function uniqueCandidates(item) {
+      const values = [item.recognized, ...(item.candidates || [])]
+        .map((value) => String(value ?? "").trim())
+        .filter(Boolean);
+      return [...new Set(values)];
+    }
+
+    function defaultDecision(item) {
+      const question = Number(item.question);
+      return {
+        question,
+        action: "use_recognized",
+        final: String(item.recognized ?? ""),
+        confirmed: false,
+        confirmed_at: null
+      };
+    }
+
+    function renderCards(data) {
+      const cards = $("cards");
+      const items = reviewItems(data);
+      decisions = new Map();
+      cards.innerHTML = "";
+
+      if (!items.length) {
+        cards.innerHTML = `<div class="card"><div class="card-body"><p>review_required 문항이 없습니다.</p></div></div>`;
+        return;
+      }
+
+      for (const item of items) {
+        const question = Number(item.question);
+        const decision = defaultDecision(item);
+        decisions.set(question, decision);
+        const candidates = uniqueCandidates(item);
+        const warnings = asArray(item.warnings);
+        const reasons = asArray(item.review_reasons);
+        const candidateRows = candidates.map((candidate, index) => {
+          const label = index === 0 && candidate === String(item.recognized ?? "") ? "recognized 사용" : `후보${index + 1}`;
+          return `
+            <label class="choice-row">
+              <input type="radio" name="choice-${question}" value="${escapeAttr(candidate)}" data-action="${index === 0 ? "use_recognized" : "use_candidate"}" ${index === 0 ? "checked" : ""}>
+              <span>${escapeHtml(label)}: <span class="mono">${escapeHtml(candidate)}</span></span>
+            </label>
+          `;
+        }).join("");
+
+        const card = document.createElement("article");
+        card.className = "card";
+        card.dataset.question = String(question);
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="q-title">${qLabel(question)}</div>
+            <span class="badge">review_required</span>
+          </div>
+          <div class="card-body">
+            <div class="image-grid">
+              ${imageFigure("원본 crop", item.cropPath, `${qLabel(question)} original crop`)}
+              ${imageFigure("enhanced crop", item.enhancedCropPath, `${qLabel(question)} enhanced crop`)}
+            </div>
+            <div class="details">
+              <div class="field">
+                <span class="label">recognized</span>
+                <div class="mono">${escapeHtml(item.recognized)}</div>
+              </div>
+              <div class="field">
+                <span class="label">warnings</span>
+                <div class="pill-list">${warnings.map((warning) => `<span class="pill">${escapeHtml(warning)}</span>`).join("") || "<span class=\"mono\">없음</span>"}</div>
+              </div>
+              <div class="field">
+                <span class="label">review reasons</span>
+                <div class="mono">${escapeHtml(reasons.join("\n") || "없음")}</div>
+              </div>
+              <div class="field">
+                <span class="label">선택</span>
+                <div class="choices">
+                  ${candidateRows}
+                  <label class="choice-row">
+                    <input type="radio" name="choice-${question}" value="" data-action="keep_review_required">
+                    <span>검토 필요</span>
+                  </label>
+                </div>
+              </div>
+              <div class="field">
+                <label for="final-${question}">최종 선택값</label>
+                <input class="final-input" id="final-${question}" value="${escapeAttr(decision.final)}" placeholder="최종 답안 또는 검토 필요 사유">
+              </div>
+              <div class="confirm-line">
+                <button type="button" class="primary confirm-btn">확정</button>
+                <span class="confirmed" hidden>확정됨</span>
+              </div>
+            </div>
+          </div>
+        `;
+        cards.appendChild(card);
+      }
+
+      wireCards();
+    }
+
+    function wireCards() {
+      document.querySelectorAll(".card").forEach((card) => {
+        const question = Number(card.dataset.question);
+        const input = card.querySelector(".final-input");
+        const confirmed = card.querySelector(".confirmed");
+        card.querySelectorAll("input[type='radio']").forEach((radio) => {
+          radio.addEventListener("change", () => {
+            const action = normalizeAction(radio.dataset.action);
+            const final = action === "keep_review_required" ? "" : radio.value;
+            input.value = final;
+            decisions.set(question, { question, action, final, confirmed: false, confirmed_at: null });
+            confirmed.hidden = true;
+          });
+        });
+        input.addEventListener("input", () => {
+          const selected = card.querySelector("input[type='radio']:checked");
+          const selectedAction = normalizeAction(selected?.dataset.action);
+          const selectedValue = String(selected?.value ?? "").trim();
+          const final = input.value.trim();
+          let action = selectedAction;
+          if (!final) {
+            action = "keep_review_required";
+          } else if (selectedAction !== "keep_review_required" && final !== selectedValue) {
+            action = "manual_override";
+          }
+          decisions.set(question, { question, action, final, confirmed: false, confirmed_at: null });
+          confirmed.hidden = true;
+        });
+        card.querySelector(".confirm-btn").addEventListener("click", () => {
+          const selected = card.querySelector("input[type='radio']:checked");
+          const selectedAction = normalizeAction(selected?.dataset.action);
+          const selectedValue = String(selected?.value ?? "").trim();
+          const final = input.value.trim();
+          let action = selectedAction;
+          if (!final || selectedAction === "keep_review_required") {
+            action = "keep_review_required";
+          } else if (final !== selectedValue) {
+            action = "manual_override";
+          }
+          decisions.set(question, {
+            question,
+            action,
+            final,
+            confirmed: true,
+            confirmed_at: new Date().toISOString()
+          });
+          confirmed.hidden = false;
+          updateExportText();
+        });
+      });
+    }
+
+    function exportSource() {
+      const source = currentData.source || {};
+      return {
+        eval_json: source.eval_json ?? currentSource.eval_json ?? null,
+        review_ui_sample: source.review_ui_sample ?? currentSource.review_ui_sample ?? null
+      };
+    }
+
+    function exportCaseId() {
+      return currentData.case_id || currentData.caseId || null;
+    }
+
+    function buildExport() {
+      const items = reviewItems(currentData);
+      const confirmedCount = [...decisions.values()].filter((decision) => decision.confirmed).length;
+      const reviewRequiredCount = items.length;
+      const total = currentData.summary?.total ?? (currentData.items || []).length;
+      const safeAutoGrade = currentData.summary?.safe_auto_grade_count ?? Math.max(0, total - reviewRequiredCount);
+      return {
+        schema: "subjective_review_ui_export",
+        schema_version: "0.1",
+        external_api_calls: false,
+        test_id: currentData.test_id || null,
+        case_id: exportCaseId(),
+        source: exportSource(),
+        summary: {
+          total,
+          safe_auto_grade_count: safeAutoGrade,
+          review_required_count: reviewRequiredCount,
+          confirmed_count: confirmedCount,
+          pending_count: Math.max(0, reviewRequiredCount - confirmedCount)
+        },
+        decisions: items.map((item) => {
+          const question = Number(item.question);
+          const decision = decisions.get(question) || defaultDecision(item);
+          const confirmed = Boolean(decision.confirmed);
+          return {
+            question,
+            status: confirmed ? "confirmed" : "pending",
+            recognized: item.recognized ?? "",
+            final: decision.final ?? "",
+            action: normalizeAction(decision.action),
+            confirmed,
+            warnings: asArray(item.warnings),
+            review_reasons: asArray(item.review_reasons),
+            confirmed_by: confirmed ? "manual_review" : null,
+            confirmed_at: confirmed ? (decision.confirmed_at || null) : null
+          };
+        })
+      };
+    }
+
+    function updateExportText() {
+      $("exportText").value = JSON.stringify(buildExport(), null, 2);
+    }
+
+    function render(data, sourceLabel, sourceMeta = {}) {
+      currentData = data;
+      currentSource = {
+        eval_json: sourceMeta.eval_json ?? data.source?.eval_json ?? null,
+        review_ui_sample: sourceMeta.review_ui_sample ?? data.source?.review_ui_sample ?? sourceLabel ?? null
+      };
+      updateStats(data);
+      renderCards(data);
+      updateExportText();
+      setStatus(`${sourceLabel} 로드됨: review_required ${reviewItems(data).length}개 표시`);
+    }
+
+    async function loadAdjacentSample() {
+      try {
+        const response = await fetch("review_ui_mock_sample.json", { cache: "no-store" });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        render(await response.json(), "review_ui_mock_sample.json", { review_ui_sample: "review_ui_mock_sample.json" });
+      } catch (error) {
+        render(embeddedSample, "내장 샘플", { review_ui_sample: "embedded_sample" });
+        setStatus(`내장 샘플 로드됨. file:// 환경에서는 JSON fetch가 막힐 수 있습니다. (${error.message})`);
+      }
+    }
+
+    $("loadSampleBtn").addEventListener("click", loadAdjacentSample);
+    $("jsonFile").addEventListener("change", async (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        render(JSON.parse(text), file.name, { review_ui_sample: file.name });
+      } catch (error) {
+        setStatus(`JSON 파일을 읽지 못했습니다: ${error.message}`);
+      }
+    });
+    $("exportBtn").addEventListener("click", updateExportText);
+    $("downloadBtn").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(buildExport(), null, 2) + "\n"], { type: "application/json;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      const caseId = exportCaseId();
+      link.href = url;
+      link.download = caseId ? `review_ui_export_${String(caseId).replace(/[^a-zA-Z0-9_-]+/g, "_")}.json` : "review_ui_export.json";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    loadAdjacentSample();
+  </script>
+</body>
+</html>

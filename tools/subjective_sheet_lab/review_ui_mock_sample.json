@@ -1,0 +1,60 @@
+{
+  "ok": true,
+  "mode": "subjective_review_ui_mock_sample",
+  "test_id": "subjective_review_mock",
+  "test_name": "Review Required UI Mock",
+  "case_id": "review_ui_mock_sample",
+  "source": {
+    "eval_json": "eval/eval.json",
+    "review_ui_sample": "review_ui_mock_sample.json"
+  },
+  "summary": {
+    "total": 20,
+    "safe_auto_grade_count": 17,
+    "review_required_count": 3
+  },
+  "items": [
+    {
+      "question": 4,
+      "review_required": true,
+      "expected": "ㄱ,ㄷ",
+      "recognized": "7,C",
+      "final": "7,C",
+      "status": "needs_review",
+      "warnings": ["manual_read_uncertain", "jamo_choice_confusion"],
+      "review_reasons": ["jamo_choice_confusion", "review_if_contains:7", "review_if_contains:C"],
+      "cropPath": "samples/stress_test/person_05_guided_good/crops/q004.png",
+      "enhancedCropPath": "",
+      "candidates": ["ㄱ,ㄷ", "ㄷ,ㄱ", "7,C"],
+      "note": "ㄱ/ㄷ 선택지가 7/C처럼 읽힌 예시"
+    },
+    {
+      "question": 6,
+      "review_required": true,
+      "expected": "ㄴ,ㄹ",
+      "recognized": "4,2",
+      "final": "4,2",
+      "status": "needs_review",
+      "warnings": ["manual_read_uncertain", "jamo_choice_confusion"],
+      "review_reasons": ["jamo_choice_confusion", "review_if_contains:4", "review_if_contains:2"],
+      "cropPath": "samples/stress_test/person_05_guided_good/crops/q006.png",
+      "enhancedCropPath": "",
+      "candidates": ["ㄴ,ㄹ", "ㄹ,ㄴ", "4,2"],
+      "note": "ㄴ/ㄹ 선택지가 4/2처럼 읽힌 예시"
+    },
+    {
+      "question": 19,
+      "review_required": true,
+      "expected": "x+2=4",
+      "recognized": "x±2=4",
+      "final": "x±2=4",
+      "status": "needs_review",
+      "warnings": ["plus_minus_uncertain", "manual_read_uncertain"],
+      "review_reasons": ["plus_minus_uncertain"],
+      "cropPath": "samples/stress_test/person_04_guided_good/crops/q019.png",
+      "enhancedCropPath": "samples/stress_test/person_04_guided_good/enhanced_crops/q019.png",
+      "candidates": ["x+2=4", "x-2=4", "x±2=4"],
+      "note": "+와 ± 구분이 필요한 예시"
+    }
+  ]
+}

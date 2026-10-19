@@ -1,0 +1,12 @@
+{
+  "test_id": "unit_test_sample",
+  "test_name": "단원평가 샘플",
+  "question_count": 20,
+  "choice_count": 5,
+  "answer_text_format": "compact",
+  "page": {
+    "width_px": 2480,
+    "height_px": 3508,
+    "dpi": 300
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "schema": "subjective_grade_report",
+  "schema_version": "0.1",
+  "external_api_calls": false,
+  "test_id": "sample_test",
+  "student_id": "sample_student",
+  "case_id": "person_05_guided_good",
+  "attempt_id": "attempt_001",
+  "source": {
+    "payload_schema": "subjective_final_answer_payload",
+    "answer_key_test_id": "subjective_sample"
+  },
+  "summary": {
+    "total_questions": 5,
+    "gradable_questions": 4,
+    "blocked_questions": 1,
+    "correct_count": 3,
+    "incorrect_count": 1,
+    "score": 3
+  },
+  "items": [
+    {
+      "question": 1,
+      "final_answer": "1/2",
+      "expected": "1/2",
+      "is_correct": true,
+      "grading_status": "gradable",
+      "final_answer_source": "safe_auto_grade",
+      "match_status": "exact_match",
+      "blocked_reason": null,
+      "payload_grading_status": "gradable"
+    },
+    {
+      "question": 4,
+      "final_answer": "sqrt(3)",
+      "expected": "sqrt(3)",
+      "is_correct": true,
+      "grading_status": "gradable",
+      "final_answer_source": "student_selected",
+      "match_status": "exact_match",
+      "blocked_reason": null,
+      "payload_grading_status": "gradable"
+    },
+    {
+      "question": 9,
+      "final_answer": "3sqrt(2)",
+      "expected": "3sqrt(2)",
+      "is_correct": true,
+      "grading_status": "gradable",
+      "final_answer_source": "retake_recognized",
+      "match_status": "exact_match",
+      "blocked_reason": null,
+      "payload_grading_status": "gradable"
+    },
+    {
+      "question": 10,
+      "final_answer": "7",
+      "expected": "0",
+      "is_correct": false,
+      "grading_status": "gradable",
+      "final_answer_source": "student_manual_input",
+      "match_status": "needs_review",
+      "blocked_reason": null,
+      "payload_grading_status": "gradable"
+    },
+    {
+      "question": 12,
+      "final_answer": null,
+      "expected": "9/2",
+      "is_correct": null,
+      "grading_status": "blocked",
+      "final_answer_source": null,
+      "match_status": "not_graded",
+      "blocked_reason": "payload_grading_status_blocked",
+      "payload_grading_status": "blocked"
+    }
+  ]
+}

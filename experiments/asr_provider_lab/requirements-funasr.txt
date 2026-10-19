@@ -1,0 +1,13 @@
+# Optional packages for the isolated ASR lab only.
+# Review before installing. Do not install into the production app environment
+# until provider behavior has been benchmarked on representative non-sensitive audio.
+
+faster-whisper
+funasr
+modelscope
+
+# Torch wheels vary by Python, CPU/GPU, CUDA, and platform.
+# Install torch/torchaudio according to the official PyTorch selector if pip
+# cannot resolve a suitable CPU build automatically.
+# torch
+# torchaudio

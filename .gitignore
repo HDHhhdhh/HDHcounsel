@@ -1,0 +1,82 @@
+# Local credentials and machine-specific settings
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+*credentials*.json
+*service_account*.json
+*token*.json
+*.pem
+*.key
+
+# Python environments and caches
+.venv/
+.venv_broken_*/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local Codex and agent state
+.agents/
+.codex/
+.omo/
+.codegraph/
+.work/
+.safe-edit/
+
+# Student records and runtime data
+data/
+generated/
+tmp/
+backups/
+counsel-note_BACKUPS/
+models/
+recordings/
+transcripts/
+logs/
+artifacts/
+**/samples/
+**/sample_outputs/
+*.m4a
+*.wav
+*.mp3
+*.flac
+*.ogg
+*.aac
+*.wma
+*.webm
+*.mp4
+*.csv
+
+# Debug captures and API snapshots
+_admin_api_debug/
+_debug_audio/
+tests_api_snapshot/
+
+# Bundled third-party binaries and generated tool samples
+tools/ffmpeg/
+tools/**/samples/
+tools/**/output/
+tools/**/outputs/
+tools/**/exports/
+*.exe
+*.msi
+
+# Generated reports, exports, and archives
+*.log
+*.zip
+drive_unit_pdf_listing*.csv
+admin_snapshot.txt
+app_structure_snapshot.txt
+test_pipeline_analysis_for_gpt.txt
+전체_점검_보고서_*.txt
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.tmp
+~$*
