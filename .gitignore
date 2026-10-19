@@ -17,6 +17,10 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+*.egg-info/
+build/
+dist/
+hdhcounsel.toml
 
 # Local Codex and agent state
 .agents/

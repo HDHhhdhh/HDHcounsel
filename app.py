@@ -398,6 +398,7 @@ APP_MAINTENANCE_CLEANUP_POLICIES = [
     },
 ]
 PROCESSING_MODES = {
+    "HDH 로컬 화자 전사": {"model_size": "large-v3", "beam_size": 5, "compute_type": "hdh-local"},
     "GPU 터보 모드": {"model_size": "large-v3-turbo", "beam_size": 1, "compute_type": "openvino-int8"},
     "빠른 모드": {"model_size": "base", "beam_size": 1, "compute_type": "int8"},
     "균형 모드": {"model_size": "small", "beam_size": 3, "compute_type": "int8"},
@@ -7368,6 +7369,10 @@ def write_transcript_file_unique(
 
 @st.cache_resource(show_spinner=False)
 def load_whisper_model(model_size: str, compute_type: str) -> WhisperModel:
+    if compute_type == "hdh-local":
+        from hdhcounsel.config import Settings
+
+        return Settings.load()
     if compute_type == "openvino-int8":
         from counsel_modules.openvino_whisper import OpenVINOWhisperModel
 
@@ -7627,6 +7632,25 @@ def transcribe_audio(
     processing_mode: str = "",
     progress_callback=None,
 ) -> tuple[str, list[dict[str, str]]]:
+    from hdhcounsel.config import Settings
+
+    if isinstance(model, Settings):
+        from hdhcounsel.service import transcribe
+
+        result = transcribe(audio_path, model)
+        if not result.segments:
+            raise RuntimeError("음성이 인식되지 않았습니다. 원본 녹음을 확인하세요.")
+        rows = [
+            {
+                "start": format_timestamp(segment.start),
+                "end": format_timestamp(segment.end),
+                "text": segment.text,
+                "speaker": segment.speaker or "UNKNOWN",
+            }
+            for segment in result.segments
+        ]
+        return result.text(), rows
+
     initial_prompt = build_whisper_initial_prompt(student_name, use_prompt_hint)
     transcribe_options = {
         "language": "ko",
@@ -9218,7 +9242,7 @@ def initialize_draft_state() -> None:
         st.session_state.setdefault("author_name", get_default_author_name())
         st.session_state.setdefault("counseling_date", today_kst)
         st.session_state.setdefault("counseling_date_input", st.session_state["counseling_date"])
-        st.session_state.setdefault("selected_mode", "GPU 터보 모드")
+        st.session_state.setdefault("selected_mode", "HDH 로컬 화자 전사")
         st.session_state.setdefault("selected_summary_style", "기본 상담 정리")
         st.session_state.setdefault("transcript_text", "")
         st.session_state.setdefault("transcript_segments", [])

@@ -1,4 +1,104 @@
-# 학원 개별 상담 정리 도구
+# HDHcounsel
+
+학생 상담 녹음을 **이 PC에서** 한국어로 전사하고 시간·화자·단어 근거와
+검수 기록을 남기는 Windows 중심 앱입니다. 새 기본 실행은 Google 설정,
+Codex 로그인, 유료 API가 필요 없습니다.
+
+**원본:** [jangkyuri/counsel-note-public](https://github.com/jangkyuri/counsel-note-public),
+commit `47da11d`. 원본 소스와 이력을 보존했습니다. 원본에는 명시적인 라이선스가
+없으므로 임의로 MIT 등의 라이선스를 붙이지 않습니다. 재배포 조건을 확인하기
+전에는 이 저장소를 비공개로 유지하세요. [조사와 라이선스 상태](docs/UPSTREAM_REVIEW.md).
+
+## 달라진 점
+
+- CPU Whisper base/small/medium 및 OpenVINO turbo 외에 **WhisperX 3.8.6,
+  large-v3, 한국어 wav2vec2 정렬, pyannote Community-1** 경로를 추가했습니다.
+- NVIDIA CUDA 기본값은 FP16, batch 4입니다. 부족하면 batch 1 또는 CPU INT8로
+  설정합니다. 단계마다 모델을 해제하고 작업이 끝나면 별도 프로세스를 종료합니다.
+- 다운로드 전용 `prepare`와 오프라인 전사를 분리했습니다. 추론 중 모델 자동
+  다운로드와 Python 소켓 연결을 차단하며 pyannote/HF 텔레메트리를 끕니다.
+- `hdhcounsel/`은 설정, 도메인, 음성 변환, 추론, 저장, CLI, UI를 분리합니다.
+  원문은 보존하고 화자 이름·검수 메모는 별도 원자적 JSON 파일에 저장합니다.
+- 기존 `app.py`의 일괄 처리·Codex 요약·Google Docs·ADMIN은 보존했습니다.
+  **이 legacy 화면은 외부 서비스와 통신하며 완전 로컬 앱이 아닙니다.**
+  새 화면은 원문 검수·수동 상담 메모용이며 생성형 자동 요약을 하지 않습니다.
+
+## Windows 설치
+
+Python **3.12 x64**와 최신 NVIDIA 드라이버를 사용하세요. 모델용 디스크 공간을
+충분히 확보합니다. RTX 4070 SUPER 12GB에서 낮은 배치로 시작하는 구성이며,
+화자 분리 정확도와 한국어 인명은 사람이 확인해야 합니다.
+
+```powershell
+py -3.12 -I -m venv .venv
+.\.venv\Scripts\python.exe -I -m pip install torch==2.8.0 torchaudio==2.8.0 torchvision==0.23.0 --index-url https://download.pytorch.org/whl/cu128
+.\.venv\Scripts\python.exe -I -m pip install -e ".[speech,dev,legacy]"
+.\.venv\Scripts\python.exe -I -m pip check
+```
+
+FFmpeg 실행 파일은 설치된 `imageio-ffmpeg`의 번들을 기본 사용합니다. 이미 PATH에
+FFmpeg가 있으면 그것을 우선합니다. TorchCodec/pyannote 환경에 따라 FFmpeg
+4–7의 **공유 DLL**도 필요할 수 있습니다. CUDA는 PyTorch뿐 아니라 CTranslate2가
+사용하는 cuBLAS/cuDNN 9 DLL도 확인해야 합니다. [운영 안내](docs/HDHCOUNSEL.md).
+
+## 모델 준비: 음성 없이 온라인으로 한 번
+
+기본 작업 폴더는 `%USERPROFILE%\.hdhcounsel`입니다. 다른 위치는
+`HDHCOUNSEL_HOME` 환경변수로 설정합니다. 앱 코드 폴더에 실제 상담 자료를
+넣지 마세요.
+
+1. Hugging Face의 `pyannote/speaker-diarization-community-1` 모델 페이지에서
+   조건에 동의합니다. 읽기 전용 토큰을 **로컬 셸의 `HF_TOKEN` 환경변수**에만
+   설정합니다. 토큰을 설정 파일·명령 기록·Git에 넣지 않습니다.
+2. 모델을 준비합니다. 토큰은 다운로드 접근에만 필요하며 음성을 전송하지 않습니다.
+
+```powershell
+.\.venv\Scripts\python.exe -I -m hdhcounsel.cli prepare
+# 화자 분리 없이 먼저 점검하는 경우:
+.\.venv\Scripts\python.exe -I -m hdhcounsel.cli prepare --no-diarization
+```
+
+모델 revision은 `models/manifest.json`에 기록합니다. 모델 파일은 Git에 올리지
+않습니다. Community-1의 모델 라이선스는 CC-BY-4.0이며 모델 카드의 조건을
+따릅니다. WhisperX 코드의 BSD-2-Clause 및 각 모델의 개별 조건도 확인하세요.
+
+## 실행과 검수
+
+```powershell
+.\.venv\Scripts\python.exe -I -m hdhcounsel.cli ui
+# 또는 run_hdhcounsel.bat
+```
+
+브라우저 주소: `http://127.0.0.1:8517`. 녹음 선택 → 로컬 전사 → 화자 이름
+확인 → 상담 메모 작성 → 검수 기록 저장 순서입니다. 전사 원문은 자동 저장하고,
+검수 메모는 저장 버튼을 눌러야 보존됩니다. 업로드한 음성 사본과 변환 WAV는
+작업 뒤 삭제하며 원본 파일은 수정하지 않습니다.
+
+```powershell
+.\.venv\Scripts\python.exe -I -m hdhcounsel.cli transcribe "C:\recordings\sample.wav"
+.\.venv\Scripts\python.exe -I -m hdhcounsel.cli transcribe "C:\recordings\sample.wav" --no-diarization --cpu
+```
+
+설정 예시는 `hdhcounsel.example.toml`입니다. 기본
+`%USERPROFILE%\.hdhcounsel\config.toml`에 두거나
+`hdhcounsel --config "C:\private\config.toml" ui`처럼 지정합니다.
+SPEAKER 번호는 파일별 군집이며 실제 학생/상담자를 자동 식별하지 않습니다.
+겹친 발화, 짧은 맞장구, 이름, 숫자는 원음을 대조하세요.
+
+## 검증
+
+```powershell
+.\.venv\Scripts\python.exe -I -m pytest
+.\.venv\Scripts\python.exe -I -m ruff check hdhcounsel tests
+```
+
+실제 실행 증거와 미검증 항목은 [검증 결과](docs/VERIFICATION.md)를 참조하세요.
+기존 운영 연동을 쓰려면 아래의 upstream 안내를 따르되 별도의 권한과 설정이
+필요합니다. 기존 `run_app.bat`는 legacy 앱을 실행합니다.
+
+---
+
+# 원본 학원 개별 상담 정리 도구 안내 (legacy)
 
 ## 공개 소스 안내
 
