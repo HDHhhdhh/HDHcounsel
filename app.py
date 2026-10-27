@@ -5015,7 +5015,7 @@ def execute_log_csv_transfer(
                 failure_count += 1
                 results.append(build_log_csv_to_docs_result_entry(row, '실패', str(exc)[:500], doc_url=doc_url, doc_id=doc_id, dedupe_key=dedupe_key, source_index=selected_index, retry_of_run_id=retry_of_run_id, retry_attempt=retry_attempt if retry_run_active else '', retry_source_status=retry_source_status, batch_index=batch_index, batch_size=current_batch_size, batch_total=batch_total, **admin_match_log_fields, summary_text=final_docs_summary))
                 failed_indices.append(selected_index)
-            if consumed_filter_enabled and results and (str(results[-1].get('source_index') or '') == str(selected_index)):
+            if consumed_filter_enabled and results and (str(results[-1].get('source_index', '')) == str(selected_index)):
                 mark_result = mark_consumed_admin_notes_for_saved_row(row, results[-1], final_docs_summary)
                 if mark_result.get('marked_count'):
                     results[-1]['admin_consumed_marked_count'] = mark_result.get('marked_count', 0)
@@ -8813,7 +8813,8 @@ def safe_upload_path(filename: str) -> Path:
 def save_uploaded_file_copy(uploaded_file) -> Path:
     validate_uploaded_extension(uploaded_file)
     UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
-    upload_key = f"{uploaded_file.name}|{uploaded_file.size}"
+    uploaded_bytes = uploaded_file.getbuffer()
+    upload_key = f"{uploaded_file.name}|{hashlib.sha256(uploaded_bytes).hexdigest()}"
     if (
         st.session_state.get("uploaded_audio_key") == upload_key
         and st.session_state.get("uploaded_audio_saved_path")
@@ -8824,7 +8825,7 @@ def save_uploaded_file_copy(uploaded_file) -> Path:
         return cached_path
 
     destination = safe_upload_path(uploaded_file.name)
-    destination.write_bytes(uploaded_file.getbuffer())
+    destination.write_bytes(uploaded_bytes)
     st.session_state["uploaded_audio_key"] = upload_key
     st.session_state["uploaded_audio_saved_path"] = str(destination)
     st.session_state["current_audio_path"] = str(destination)

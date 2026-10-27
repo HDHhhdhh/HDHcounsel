@@ -6,6 +6,7 @@ const vm = require("vm");
 const scriptPath = path.join(__dirname, "google_apps_script_doPost.js");
 let fakeNow = 0;
 let uuidCounter = 0;
+let writeLocked = false;
 const propertyValues = new Map();
 const scriptProperties = {
   getProperty(key) {
@@ -29,12 +30,22 @@ const context = {
   },
   LockService: {
     getScriptLock() {
+      let owned = false;
       return {
         tryLock() {
+          if (writeLocked) return false;
+          writeLocked = true;
+          owned = true;
           return true;
         },
-        waitLock() {},
-        releaseLock() {},
+        waitLock() {
+          if (!this.tryLock()) throw new Error("lock timeout");
+        },
+        releaseLock() {
+          assert.strictEqual(owned, true);
+          owned = false;
+          writeLocked = false;
+        },
       };
     },
   },
@@ -274,19 +285,37 @@ assert.strictEqual(post("다른 내용", true).found_existing, false);
 assert.strictEqual(JSON.stringify([...propertyValues]), propertiesBeforeVerify);
 assert.strictEqual(documentSaves, 2);
 const opensBeforeHealth = documentOpens;
-assert.strictEqual(context.doGet().server_revision, "docs-speed-20261001");
+assert.strictEqual(context.doGet().server_revision, "docs-write-lock-20261027");
 assert.strictEqual(documentOpens, opensBeforeHealth);
 
-const firstDocumentLease = context.acquireDocumentLease_("doc-a");
-const otherDocumentLease = context.acquireDocumentLease_("doc-b");
-assert.notStrictEqual(firstDocumentLease.propertyKey, otherDocumentLease.propertyKey);
-assert.throws(
-  () => context.acquireDocumentLease_("doc-a"),
-  /document lock timeout/i,
-);
-context.releaseDocumentLease_(firstDocumentLease);
-const reacquiredDocumentLease = context.acquireDocumentLease_("doc-a");
-context.releaseDocumentLease_(reacquiredDocumentLease);
-context.releaseDocumentLease_(otherDocumentLease);
+// C3: reenter the actual POST after the old 120-second lease would expire.
+// The second request must not even open the document before the first saves.
+const openDocument = context.DocumentApp.openById;
+let overlappingResult;
+const opensBeforeOverlap = documentOpens;
+context.DocumentApp.openById = docId => {
+  fakeNow += 120001;
+  overlappingResult = post("overlapping write");
+  assert.strictEqual(overlappingResult.ok, false);
+  assert.match(overlappingResult.error, /document lock timeout/i);
+  assert.strictEqual(writeLocked, true);
+  const doc = openDocument(docId);
+  const save = doc.saveAndClose;
+  doc.saveAndClose = () => {
+    assert.strictEqual(writeLocked, true);
+    save();
+  };
+  return doc;
+};
+assert.strictEqual(post(original).duplicate_skipped, true);
+assert.strictEqual(documentOpens, opensBeforeOverlap + 1);
+assert.strictEqual(writeLocked, false);
+context.DocumentApp.openById = () => { throw new Error("synthetic document failure"); };
+assert.match(post(original).error, /synthetic document failure/);
+assert.strictEqual(writeLocked, false);
+context.DocumentApp.openById = openDocument;
+assert.strictEqual(post(original).duplicate_skipped, true);
+assert.strictEqual(writeLocked, false);
 
+process.stdout.write("HDHcounsel-C3: expired-window overlap blocked; lock released on success and failure\n");
 process.stdout.write("same-date Google Docs policy checks passed\n");

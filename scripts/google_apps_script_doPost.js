@@ -15,12 +15,8 @@ const DEDUPE_KEY_RETENTION_DAYS = 90;
 const DEDUPE_CLEANUP_INTERVAL_HOURS = 24;
 const DEDUPE_CLEANUP_MAX_CHECK = 300;
 const DEDUPE_CLEANUP_MARKER_KEY = "dedupe_cleanup:last_run";
-const DOCUMENT_LEASE_PREFIX = "document_lock:";
-const DOCUMENT_LEASE_WAIT_MS = 15000;
-const DOCUMENT_LEASE_DURATION_MS = 120000;
-const DOCUMENT_LEASE_GUARD_WAIT_MS = 1000;
-const DOCUMENT_LEASE_POLL_MS = 100;
-const SERVER_REVISION = "docs-speed-20261001";
+const DOCUMENT_WRITE_LOCK_WAIT_MS = 15000;
+const SERVER_REVISION = "docs-write-lock-20261027";
 
 function doPost(e) {
   try {
@@ -47,7 +43,12 @@ function doPost(e) {
       return verifyExistingCounselSummary_(docId, summary, counselingDate, dedupeKey);
     }
 
-    const documentLease = acquireDocumentLease_(docId);
+    // Hold the service-managed lock until saveAndClose finishes. A timed
+    // property lease can expire while its original writer is still running.
+    const writeLock = LockService.getScriptLock();
+    if (!writeLock.tryLock(DOCUMENT_WRITE_LOCK_WAIT_MS)) {
+      throw new Error("document lock timeout: another request is updating a document");
+    }
 
     try {
       const scriptProperties = PropertiesService.getScriptProperties();
@@ -168,7 +169,7 @@ function doPost(e) {
         dedupe_cleanup_deleted: cleanupResult.deleted
       });
     } finally {
-      releaseDocumentLease_(documentLease);
+      writeLock.releaseLock();
     }
   } catch (err) {
     return jsonOutput_({
@@ -176,80 +177,6 @@ function doPost(e) {
       error: String(err)
     });
   }
-}
-
-function acquireDocumentLease_(docId) {
-  const propertyKey = DOCUMENT_LEASE_PREFIX + String(docId || "").trim();
-  const token = Utilities.getUuid();
-  const deadline = Date.now() + DOCUMENT_LEASE_WAIT_MS;
-  const scriptProperties = PropertiesService.getScriptProperties();
-
-  while (Date.now() <= deadline) {
-    const guard = LockService.getScriptLock();
-    const remainingWait = Math.max(1, deadline - Date.now());
-    const guardAcquired = guard.tryLock(
-      Math.min(DOCUMENT_LEASE_GUARD_WAIT_MS, remainingWait)
-    );
-    if (guardAcquired) {
-      try {
-        const now = Date.now();
-        const activeLease = parseDocumentLease_(scriptProperties.getProperty(propertyKey));
-        if (!activeLease || activeLease.expiresAt <= now) {
-          scriptProperties.setProperty(
-            propertyKey,
-            JSON.stringify({ token: token, expiresAt: now + DOCUMENT_LEASE_DURATION_MS })
-          );
-          return { propertyKey: propertyKey, token: token };
-        }
-      } finally {
-        guard.releaseLock();
-      }
-    }
-
-    const remainingSleep = deadline - Date.now();
-    if (remainingSleep <= 0) {
-      break;
-    }
-    Utilities.sleep(Math.min(DOCUMENT_LEASE_POLL_MS, remainingSleep));
-  }
-
-  throw new Error("document lock timeout: another request is updating this document");
-}
-
-function releaseDocumentLease_(lease) {
-  if (!lease || !lease.propertyKey || !lease.token) {
-    return;
-  }
-  const guard = LockService.getScriptLock();
-  guard.waitLock(DOCUMENT_LEASE_WAIT_MS);
-  try {
-    const scriptProperties = PropertiesService.getScriptProperties();
-    const activeLease = parseDocumentLease_(
-      scriptProperties.getProperty(lease.propertyKey)
-    );
-    if (activeLease && activeLease.token === lease.token) {
-      scriptProperties.deleteProperty(lease.propertyKey);
-    }
-  } finally {
-    guard.releaseLock();
-  }
-}
-
-function parseDocumentLease_(rawLease) {
-  if (!rawLease) {
-    return null;
-  }
-  try {
-    const parsed = JSON.parse(rawLease);
-    const token = String(parsed.token || "");
-    const expiresAt = Number(parsed.expiresAt || 0);
-    if (token && Number.isFinite(expiresAt)) {
-      return { token: token, expiresAt: expiresAt };
-    }
-  } catch (err) {
-    return null;
-  }
-  return null;
 }
 
 function verifyExistingCounselSummary_(docId, summary, counselingDate, dedupeKey) {
